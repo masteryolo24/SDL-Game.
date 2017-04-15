@@ -1,0 +1,10 @@
+Tree Position--
+--Tree Position
+Water Position--
+--Water Position
+Mountain Position--
+--Mountain Position
+Castle Position--
+--Castle Position
+Fountain Position--
+--Fountain Position
