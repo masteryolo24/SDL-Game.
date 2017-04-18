@@ -37,6 +37,7 @@ CSprite::CSprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int
 	Orgin_Y = 0;
 
 	CurrentFrame = 0;
+	animationDelay = 0;
 
 	Amount_Frame_X = 0;
 	Amount_Frame_Y = 0;
@@ -48,6 +49,11 @@ CSprite::CSprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int
 	Camera.y = rect.y + *CameraY;
 	Camera.w = rect.w;
 	Camera.h = rect.h;
+}
+
+CSprite::~CSprite()
+{
+	SDL_DestroyTexture(image);
 }
 
 void CSprite::SetUpAnimation(int passed_Amount_X, int passed_Amount_Y) {
@@ -71,10 +77,6 @@ void CSprite::PlayAnimation(int BeginFrame, int EndFrame, int Row, float Speed) 
 	}
 }
 
-CSprite::~CSprite()
-{
-	SDL_DestroyTexture(image);
-}
 
 void CSprite::Draw() {
 	Camera.x = rect.x + *CameraX;

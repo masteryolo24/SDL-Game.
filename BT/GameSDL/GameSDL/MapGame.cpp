@@ -15,11 +15,11 @@ CMapGame::CMapGame(int ScreenWidth, int ScreenHeight, float *passed_CameraX, flo
 	UpLoadStage();
 	OnePressed = false;
 
-	levelCreateON = IMG_LoadTexture(csdl_setup->renderer, "image/levelCreateON.png");
-	levelCreateOFF = IMG_LoadTexture(csdl_setup->renderer, "image/levelCreateOFF.png");
-	deleteCreateON = IMG_LoadTexture(csdl_setup->renderer, "image/deleteCreateON.png");
-	deleteCreateOFF = IMG_LoadTexture(csdl_setup->renderer, "image/deleteCreateOFF.png");
-	Saved = IMG_LoadTexture(csdl_setup->renderer, "image/savedGame.png");
+	levelCreateON = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/levelCreateON.png");
+	levelCreateOFF = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/levelCreateOFF.png");
+	deleteCreateON = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/deleteCreateON.png");
+	deleteCreateOFF = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/deleteCreateOFF.png");
+	Saved = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/savedGame.png");
 
 	levelRect.x = levelRect.y = deleteRect.y = savedRect.y = 0;
 	levelRect.w = deleteRect.w = savedRect.w = 300;
@@ -133,15 +133,15 @@ void CMapGame::DrawObject() {
 	}
 
 	if (Mode == GamePlay && (ModeDelete == NonDelete || ModeDelete == Delete))
-		SDL_RenderCopy(csdl_setup->renderer, levelCreateOFF, NULL, &levelRect);
+		SDL_RenderCopy(csdl_setup->GetRenderer(), levelCreateOFF, NULL, &levelRect);
 	if (Mode == Level && (ModeDelete == NonDelete || ModeDelete == Delete))
-		SDL_RenderCopy(csdl_setup->renderer, levelCreateON, NULL, &levelRect);
+		SDL_RenderCopy(csdl_setup->GetRenderer(), levelCreateON, NULL, &levelRect);
 	if (ModeDelete == NonDelete && (Mode == GamePlay || Mode == Level))
-		SDL_RenderCopy(csdl_setup->renderer, deleteCreateOFF, NULL, &deleteRect);
+		SDL_RenderCopy(csdl_setup->GetRenderer(), deleteCreateOFF, NULL, &deleteRect);
 	if (ModeDelete == Delete && (Mode == GamePlay || Mode == Level))
-		SDL_RenderCopy(csdl_setup->renderer, deleteCreateON, NULL, &deleteRect);
+		SDL_RenderCopy(csdl_setup->GetRenderer(), deleteCreateON, NULL, &deleteRect);
 	if (SavedGame == true)
-		SDL_RenderCopy(csdl_setup->renderer, Saved, NULL, &savedRect);
+		SDL_RenderCopy(csdl_setup->GetRenderer(), Saved, NULL, &savedRect);
 }
 
 void CMapGame::UpLoadStage() {

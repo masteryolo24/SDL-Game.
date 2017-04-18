@@ -10,10 +10,10 @@ public:
 
 	void Begin();
 	void End();
-	SDL_Renderer* renderer;
+	
 private:
 	SDL_Window* window;
-
+	SDL_Renderer* renderer;
 	SDL_Event* mainEvent;
 	SDL_Surface* iconSurface;
 	SDL_Cursor* cursor;

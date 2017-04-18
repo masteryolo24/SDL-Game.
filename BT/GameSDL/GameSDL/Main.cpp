@@ -24,28 +24,28 @@ CMain::CMain(int passed_ScreenWidth, int passed_ScreenHeight)
 
 	gameState = StateMenu;
 
-	menu_image = IMG_LoadTexture(csdl_setup->renderer, "image/menu.jpg");
-	credit_image = IMG_LoadTexture(csdl_setup->renderer, "image/credit.jpg");
-	control_imgae = IMG_LoadTexture(csdl_setup->renderer, "image/control.jpg");
-	story_image = IMG_LoadTexture(csdl_setup->renderer, "image/story.jpg");
-	selectCharacter_image = IMG_LoadTexture(csdl_setup->renderer, "image/selectCharacter.jpg");
-	imageRect.x = 0;
-	imageRect.y = 0;
+	menu_image = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/menu.jpg");
+	credit_image = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/credit.jpg");
+	control_imgae = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/control.jpg");
+	story_image = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/story.jpg");
+	selectCharacter_image = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/selectCharacter.jpg");
+	imageRect.x =0;
+	imageRect.y =0;
 	imageRect.w = 1366;
 	imageRect.h = 700;
 
 	SoundGame = Mix_LoadWAV("sound/gameSound.wav");
 	SoundSelect = Mix_LoadWAV("sound/selectMenu.wav");
 
-	selectCharacter1 = IMG_LoadTexture(csdl_setup->renderer, "image/select1.jpg");
-	selectCharacter2 = IMG_LoadTexture(csdl_setup->renderer, "image/select2.jpg");
-	selectCharacter3 = IMG_LoadTexture(csdl_setup->renderer, "image/select3.jpg");
-	selectCharacter4 = IMG_LoadTexture(csdl_setup->renderer, "image/select4.jpg");
-	selectCharacter5 = IMG_LoadTexture(csdl_setup->renderer, "image/select5.jpg");
-	selectCharacter6 = IMG_LoadTexture(csdl_setup->renderer, "image/select6.jpg");
-	selectCharacter7 = IMG_LoadTexture(csdl_setup->renderer, "image/select7.jpg");
-	selectCharacter8 = IMG_LoadTexture(csdl_setup->renderer, "image/select8.jpg");
-	selectCharacter9 = IMG_LoadTexture(csdl_setup->renderer, "image/select9.jpg");
+	selectCharacter1 = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/select1.jpg");
+	selectCharacter2 = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/select2.jpg");
+	selectCharacter3 = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/select3.jpg");
+	selectCharacter4 = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/select4.jpg");
+	selectCharacter5 = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/select5.jpg");
+	selectCharacter6 = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/select6.jpg");
+	selectCharacter7 = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/select7.jpg");
+	selectCharacter8 = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/select8.jpg");
+	selectCharacter9 = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/select9.jpg");
 
 
 }
@@ -170,76 +170,76 @@ void CMain::OnGame() {
 void CMain::OnRender() {
 	switch (gameState) {
 	case StateMenu:
-		SDL_RenderClear(csdl_setup->renderer);
-		SDL_RenderCopy(csdl_setup->renderer, menu_image, NULL, &imageRect);
+		SDL_RenderClear(csdl_setup->GetRenderer());
+		SDL_RenderCopy(csdl_setup->GetRenderer(), menu_image, NULL, &imageRect);
 		break;
 	case StateControl:
-		SDL_RenderClear(csdl_setup->renderer);
-		SDL_RenderCopy(csdl_setup->renderer, control_imgae, NULL, &imageRect);
+		SDL_RenderClear(csdl_setup->GetRenderer());
+		SDL_RenderCopy(csdl_setup->GetRenderer(), control_imgae, NULL, &imageRect);
 		break;
 	case StateCredit:
-		SDL_RenderClear(csdl_setup->renderer);
-		SDL_RenderCopy(csdl_setup->renderer, credit_image, NULL, &imageRect);
+		SDL_RenderClear(csdl_setup->GetRenderer());
+		SDL_RenderCopy(csdl_setup->GetRenderer(), credit_image, NULL, &imageRect);
 		break;
 	case StateStory:
-		SDL_RenderClear(csdl_setup->renderer);
-		SDL_RenderCopy(csdl_setup->renderer, story_image, NULL, &imageRect);
+		SDL_RenderClear(csdl_setup->GetRenderer());
+		SDL_RenderCopy(csdl_setup->GetRenderer(), story_image, NULL, &imageRect);
 		break;
 	case StateCharacter:
-		SDL_RenderClear(csdl_setup->renderer);
-		SDL_RenderCopy(csdl_setup->renderer, selectCharacter_image, NULL, &imageRect);
+		SDL_RenderClear(csdl_setup->GetRenderer());
+		SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter_image, NULL, &imageRect);
 		switch (event.key.keysym.sym) {
 		case SDLK_1:
-			SDL_RenderClear(csdl_setup->renderer);
-			SDL_RenderCopy(csdl_setup->renderer, selectCharacter1, NULL, &imageRect);
+			SDL_RenderClear(csdl_setup->GetRenderer());
+			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter1, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character1.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_2:
-			SDL_RenderClear(csdl_setup->renderer);
-			SDL_RenderCopy(csdl_setup->renderer, selectCharacter2, NULL, &imageRect);
+			SDL_RenderClear(csdl_setup->GetRenderer());
+			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter2, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character2.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_3:
-			SDL_RenderClear(csdl_setup->renderer);
-			SDL_RenderCopy(csdl_setup->renderer, selectCharacter3, NULL, &imageRect);
+			SDL_RenderClear(csdl_setup->GetRenderer());
+			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter3, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character3.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_4:
-			SDL_RenderClear(csdl_setup->renderer);
-			SDL_RenderCopy(csdl_setup->renderer, selectCharacter4, NULL, &imageRect);
+			SDL_RenderClear(csdl_setup->GetRenderer());
+			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter4, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character4.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_5:
-			SDL_RenderClear(csdl_setup->renderer);
-			SDL_RenderCopy(csdl_setup->renderer, selectCharacter5, NULL, &imageRect);
+			SDL_RenderClear(csdl_setup->GetRenderer());
+			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter5, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character5.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_6:
-			SDL_RenderClear(csdl_setup->renderer);
-			SDL_RenderCopy(csdl_setup->renderer, selectCharacter6, NULL, &imageRect);
+			SDL_RenderClear(csdl_setup->GetRenderer());
+			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter6, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character6.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_7:
-			SDL_RenderClear(csdl_setup->renderer);
-			SDL_RenderCopy(csdl_setup->renderer, selectCharacter7, NULL, &imageRect);
+			SDL_RenderClear(csdl_setup->GetRenderer());
+			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter7, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character7.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_8:
-			SDL_RenderClear(csdl_setup->renderer);
-			SDL_RenderCopy(csdl_setup->renderer, selectCharacter8, NULL, &imageRect);
+			SDL_RenderClear(csdl_setup->GetRenderer());
+			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter8, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character8.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_9:
-			SDL_RenderClear(csdl_setup->renderer);
-			SDL_RenderCopy(csdl_setup->renderer, selectCharacter9, NULL, &imageRect);
+			SDL_RenderClear(csdl_setup->GetRenderer());
+			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter9, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character9.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 		case SDLK_SPACE:
@@ -255,7 +255,7 @@ void CMain::OnRender() {
 		GameLoop();
 		break;
 	}
-	SDL_RenderPresent(csdl_setup->renderer);
+	SDL_RenderPresent(csdl_setup->GetRenderer());
 
 }
 

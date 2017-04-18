@@ -5,9 +5,6 @@ CSDL_Setup::CSDL_Setup(bool quit, int ScreenWidth, int ScreenHeight)
 {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
-	cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
-	SDL_SetCursor(cursor);
-
 	window = NULL;
 	window = SDL_CreateWindow("Mr Tran", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ScreenWidth, ScreenHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
@@ -43,6 +40,7 @@ CSDL_Setup::~CSDL_Setup()
 	delete mainEvent;
 	SDL_FreeSurface(iconSurface);
 	SDL_FreeCursor(cursor);
+	Mix_CloseAudio();
 }
 
 SDL_Renderer* CSDL_Setup::GetRenderer() {
