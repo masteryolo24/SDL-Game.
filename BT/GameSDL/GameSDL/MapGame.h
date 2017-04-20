@@ -54,7 +54,7 @@ private:
 
 	bool OnePressed;
 	bool SavedGame;
-	CSprite* grass[2][4];
+	CSprite* grass;
 	std::vector <Tree*> moreTrees;
 	std::vector <WaterPic*> Waters;
 	std::vector <MountainPic*> Mountains;

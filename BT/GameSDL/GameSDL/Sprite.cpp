@@ -120,12 +120,6 @@ float CSprite::GetY() {
 	return Y_pos;
 }
 
-void CSprite::SetOrgin(float X, float Y) {
-	Orgin_X = X;
-	Orgin_Y = Y;
-
-	SetPosition(GetX(), GetY());
-}
 
 void CSprite::SetWidth(int W) {
 	rect.w = W;

@@ -24,8 +24,6 @@ public:
 	int GetWidth();
 	int GetHeight();
 
-	void SetOrgin(float X, float Y);
-
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, float Speed);
 	void SetUpAnimation(int passed_Amount_X, int passed_Amount_Y);
 

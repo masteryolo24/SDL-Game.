@@ -1,13 +1,8 @@
 Tree Position--
-x: 380	y: 210
-x: 598	y: 747
 --Tree Position
 Water Position--
-x: 409	y: 367
-x: 609	y: 845
 --Water Position
 Mountain Position--
-x: 399	y: 294
 --Mountain Position
 Castle Position--
 --Castle Position

@@ -3,10 +3,10 @@
 
 CSDL_Setup::CSDL_Setup(bool quit, int ScreenWidth, int ScreenHeight)
 {
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+	SDL_Init(SDL_INIT_EVERYTHING);
 
 	window = NULL;
-	window = SDL_CreateWindow("Mr Tran", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ScreenWidth, ScreenHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow("Creat A World", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ScreenWidth, ScreenHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 		std::cout << "Can not create audio: " << Mix_GetError << std::endl;
@@ -17,7 +17,6 @@ CSDL_Setup::CSDL_Setup(bool quit, int ScreenWidth, int ScreenHeight)
 	{
 		std::cout << "Can not create window:" << SDL_GetError << std::endl;
 		quit = true;
-		//return 0;
 	}
 	iconSurface = IMG_Load("image/UET.ico");
 	SDL_SetWindowIcon(window, iconSurface);

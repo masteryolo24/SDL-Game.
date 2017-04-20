@@ -47,7 +47,6 @@ private:
 	int MouseX;
 	int MouseY;
 
-	SDL_Event event;
 	int gameState;
 
 	Mix_Chunk* SoundGame;

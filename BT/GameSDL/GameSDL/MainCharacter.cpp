@@ -11,11 +11,9 @@ MainCharacter::MainCharacter(CSDL_Setup* passed_SDL_Setup, std::string FilePath,
 	MouseX = passed_MouseX;
 	MouseY = passed_MouseY;
 
-	character = new CSprite(csdl_setup->GetRenderer(), FilePath, 300, 250, 42, 42, CameraX, CameraY, CCollisionDetection(284, 234, 37, 42));
+	character = new CSprite(csdl_setup->GetRenderer(), FilePath, 300, 250, 42, 42, CameraX, CameraY, CCollisionDetection(306, 256, 37, 42));
 
 	character->SetUpAnimation(3, 4);
-	character->SetOrgin(character->GetWidth() / 2.0f, character->GetHeight() / 2.0f);
-
 	timeCheck = SDL_GetTicks();
 	Follow = false;
 	distance = 0;

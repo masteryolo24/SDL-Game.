@@ -56,6 +56,8 @@ CMain::~CMain(void)
 
 	delete character;
 
+	delete ForestStage;
+
 	Mix_FreeChunk(SoundGame);
 	Mix_FreeChunk(SoundSelect);
 
@@ -77,8 +79,6 @@ CMain::~CMain(void)
 }
 
 void CMain::GameLoop(void) {
-	while (!quit && csdl_setup->GetMainEvent()->type != SDL_QUIT) {
-		csdl_setup->Begin();
 		SDL_GetMouseState(&MouseX, &MouseY);
 
 		ForestStage->DrawBackGround();
@@ -89,17 +89,14 @@ void CMain::GameLoop(void) {
 		ForestStage->DrawObject();
 
 		ForestStage->Update();
-		csdl_setup->End();
-
-	}
 }
 
 void CMain::OnGame() {
-	while (SDL_PollEvent(&event)) {
+	//while (SDL_PollEvent(&event)) {
 		if (gameState == StateMenu) {
-			if (event.type == SDL_KEYDOWN) {
+			if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN) {
 				if (!OnePressed) {
-					switch (event.key.keysym.sym) {
+					switch (csdl_setup->GetMainEvent()->key.keysym.sym) {
 					case SDLK_RETURN:
 						gameState = StateCharacter;
 						Mix_PlayChannel(4, SoundGame, -1);
@@ -132,9 +129,9 @@ void CMain::OnGame() {
 				}
 			}
 
-			if (event.type == SDL_KEYUP) {
+			if (csdl_setup->GetMainEvent()->type == SDL_KEYUP) {
 				if (OnePressed) {
-					switch (event.key.keysym.sym) {
+					switch (csdl_setup->GetMainEvent()->key.keysym.sym) {
 					case SDLK_RETURN:
 						OnePressed = false;
 						break;
@@ -155,16 +152,16 @@ void CMain::OnGame() {
 			}
 		}
 		else if (gameState == StateCredit || gameState == StateControl || gameState == StateStory || gameState == StateCharacter) {
-			if (event.type == SDL_KEYDOWN)
-				if (event.key.keysym.sym == SDLK_ESCAPE) {
+			if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN)
+				if (csdl_setup->GetMainEvent()->key.keysym.sym == SDLK_ESCAPE) {
 					Mix_PlayChannel(5, SoundSelect, 0);
 					gameState = StateMenu;
 				}
 		}
 
-		if (event.type == SDL_QUIT)
+		if (csdl_setup->GetMainEvent()->type == SDL_QUIT)
 			quit = true;
-	}
+	//}
 }
 
 void CMain::OnRender() {
@@ -188,7 +185,7 @@ void CMain::OnRender() {
 	case StateCharacter:
 		SDL_RenderClear(csdl_setup->GetRenderer());
 		SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter_image, NULL, &imageRect);
-		switch (event.key.keysym.sym) {
+		switch (csdl_setup->GetMainEvent()->key.keysym.sym) {
 		case SDLK_1:
 			SDL_RenderClear(csdl_setup->GetRenderer());
 			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter1, NULL, &imageRect);
@@ -255,15 +252,17 @@ void CMain::OnRender() {
 		GameLoop();
 		break;
 	}
-	SDL_RenderPresent(csdl_setup->GetRenderer());
+	//SDL_RenderPresent(csdl_setup->GetRenderer());
 
 }
 
 
 void CMain::OnExecute() {
 	while (!quit && csdl_setup->GetMainEvent()->type != SDL_QUIT) {
+		csdl_setup->Begin();
 		OnGame();
 		OnRender();
+		csdl_setup->End();
 	}
 }
 

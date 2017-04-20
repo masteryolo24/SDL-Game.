@@ -5,11 +5,8 @@ CMapGame::CMapGame(int ScreenWidth, int ScreenHeight, float *passed_CameraX, flo
 	csdl_setup = passed_csdl_setup;
 	CameraX = passed_CameraX;
 	CameraY = passed_CameraY;
-	for (int i = 0; i < 1; i++) {
-		for (int j = 0; j < 1; j++) {
-			grass[i][j] = new CSprite(csdl_setup->GetRenderer(), "image/map/map.png", 4000 * i, 3171 * j, 4000, 3171, CameraX, CameraY, CCollisionDetection());
-		}
-	}
+	
+	grass = new CSprite(csdl_setup->GetRenderer(), "image/map/map.png", 0 , 0 , 4000, 3171, CameraX, CameraY, CCollisionDetection());
 	Mode = Level;
 	ModeDelete = NonDelete;
 	UpLoadStage();
@@ -32,13 +29,9 @@ CMapGame::CMapGame(int ScreenWidth, int ScreenHeight, float *passed_CameraX, flo
 	soundSave = Mix_LoadWAV("sound/savedGame.wav");
 }
 
-CMapGame::~CMapGame(void)
-{
-	for (int i = 0; i < 1; i++) {
-		for (int j = 0; j < 1; j++) {
-			delete grass[i][j];
-		}
-	}
+CMapGame::~CMapGame(void){
+
+	delete grass;
 	for (std::vector<Tree*>::iterator it = moreTrees.begin(); it != moreTrees.end(); ++it) {
 		delete (*it);
 	}
@@ -93,11 +86,7 @@ CMapGame::~CMapGame(void)
 
 void CMapGame::DrawBackGround() {
 
-	for (int i = 0; i < 1; i++) {
-		for (int j = 0; j < 1; j++) {
-			grass[i][j]->Draw();
-		}
-	}
+	grass->Draw();
 
 	for (std::vector<SoilPic*>::iterator it = Soils.begin(); it != Soils.end(); ++it) {
 		(*it)->DrawSoil();

@@ -63,10 +63,10 @@
     <ClInclude Include="SoilPic.h">
       <Filter>Header Files\ObjectH</Filter>
     </ClInclude>
-    <ClInclude Include="WheatPic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TentPic.h">
+      <Filter>Header Files\ObjectH</Filter>
+    </ClInclude>
+    <ClInclude Include="WheatPic.h">
       <Filter>Header Files\ObjectH</Filter>
     </ClInclude>
   </ItemGroup>
@@ -110,10 +110,10 @@
     <ClCompile Include="SoilPic.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
-    <ClCompile Include="WheatPic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TentPic.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="WheatPic.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
   </ItemGroup>
