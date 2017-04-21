@@ -11,7 +11,7 @@ CMain::CMain(int passed_ScreenWidth, int passed_ScreenHeight)
 
 	quit = false;
 
-	csdl_setup = new CSDL_Setup(&quit, ScreenWidth, ScreenHeight);
+	csdl_setup = new CSDL_Setup(quit, ScreenWidth, ScreenHeight);
 
 	ForestStage = new CMapGame(ScreenWidth, ScreenHeight, &CameraX, &CameraY, csdl_setup);
 
@@ -92,7 +92,6 @@ void CMain::GameLoop(void) {
 }
 
 void CMain::OnGame() {
-	//while (SDL_PollEvent(&event)) {
 		if (gameState == StateMenu) {
 			if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN) {
 				if (!OnePressed) {
@@ -161,7 +160,6 @@ void CMain::OnGame() {
 
 		if (csdl_setup->GetMainEvent()->type == SDL_QUIT)
 			quit = true;
-	//}
 }
 
 void CMain::OnRender() {
@@ -187,54 +185,63 @@ void CMain::OnRender() {
 		SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter_image, NULL, &imageRect);
 		switch (csdl_setup->GetMainEvent()->key.keysym.sym) {
 		case SDLK_1:
+			//delete character;
 			SDL_RenderClear(csdl_setup->GetRenderer());
 			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter1, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character1.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_2:
+			delete character;
 			SDL_RenderClear(csdl_setup->GetRenderer());
 			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter2, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character2.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_3:
+			delete character;
 			SDL_RenderClear(csdl_setup->GetRenderer());
 			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter3, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character3.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_4:
+			delete character;
 			SDL_RenderClear(csdl_setup->GetRenderer());
 			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter4, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character4.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_5:
+			delete character;
 			SDL_RenderClear(csdl_setup->GetRenderer());
 			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter5, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character5.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_6:
+			delete character;
 			SDL_RenderClear(csdl_setup->GetRenderer());
 			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter6, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character6.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_7:
+			delete character;
 			SDL_RenderClear(csdl_setup->GetRenderer());
 			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter7, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character7.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_8:
+			delete character;
 			SDL_RenderClear(csdl_setup->GetRenderer());
 			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter8, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character8.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
 			break;
 
 		case SDLK_9:
+			delete character;
 			SDL_RenderClear(csdl_setup->GetRenderer());
 			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter9, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character9.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);
@@ -252,8 +259,6 @@ void CMain::OnRender() {
 		GameLoop();
 		break;
 	}
-	//SDL_RenderPresent(csdl_setup->GetRenderer());
-
 }
 
 

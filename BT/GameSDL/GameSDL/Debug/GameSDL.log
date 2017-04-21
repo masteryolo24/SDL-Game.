@@ -1,4 +1,6 @@
-﻿  Main.cpp
-c:\users\dell\desktop\bt\gamesdl\gamesdl\main.cpp(14): warning C4800: 'bool *': forcing value to bool 'true' or 'false' (performance warning)
+﻿  GameSDL.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  Main.cpp
   GameSDL.vcxproj -> C:\Users\DELL\Desktop\BT\GameSDL\Debug\GameSDL.exe
   GameSDL.vcxproj -> C:\Users\DELL\Desktop\BT\GameSDL\Debug\GameSDL.pdb (Full PDB)

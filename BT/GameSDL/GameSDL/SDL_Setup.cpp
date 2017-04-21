@@ -4,6 +4,7 @@
 CSDL_Setup::CSDL_Setup(bool quit, int ScreenWidth, int ScreenHeight)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
+	IMG_Init(IMG_INIT_PNG);
 
 	window = NULL;
 	window = SDL_CreateWindow("Creat A World", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ScreenWidth, ScreenHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
