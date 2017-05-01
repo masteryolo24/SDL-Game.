@@ -71,6 +71,9 @@ CMapGame::~CMapGame(void){
 		delete (*it);
 	}
 	Tents.clear();
+	for (std::vector<FlagPic*>::iterator it = Flags.begin(); it != Flags.end(); ++it) {
+		delete (*it);
+	}
 
 
 	Mix_FreeChunk(putSound);
@@ -120,6 +123,9 @@ void CMapGame::DrawObject() {
 	for (std::vector<TentPic*>::iterator it = Tents.begin(); it != Tents.end(); ++it) {
 		(*it)->DrawTent();
 	}
+	for (std::vector<FlagPic*>::iterator it = Flags.begin(); it != Flags.end(); ++it) {
+		(*it)->DrawFlag();
+	}
 
 	if (Mode == GamePlay && (ModeDelete == NonDelete || ModeDelete == Delete))
 		SDL_RenderCopy(csdl_setup->GetRenderer(), levelCreateOFF, NULL, &levelRect);
@@ -146,9 +152,10 @@ void CMapGame::UpLoadStage() {
 		TypeFountain,
 		TypeSoil,
 		TypeWheat,
-		TypeTent
+		TypeTent,
+		TypeFlag
 	};
-	int CurrentOther = TypeNone;
+	int TypeObject = TypeNone;
 	if (LoadStage.is_open()) {
 		while (LoadStage.good())
 		{
@@ -156,13 +163,13 @@ void CMapGame::UpLoadStage() {
 
 			///================Tree Position===========///
 			if (line == "Tree Position--") {
-				CurrentOther = TypeTree;
+				TypeObject = TypeTree;
 			}
 			else if (line == "--Tree Position") {
-				CurrentOther = TypeNone;
+				TypeObject = TypeNone;
 			}
 			else {
-				if (CurrentOther == TypeTree) {
+				if (TypeObject == TypeTree) {
 					std::istringstream iss(line);
 
 					int TempX = 0;
@@ -186,13 +193,13 @@ void CMapGame::UpLoadStage() {
 			}
 			///================LOAD Water Position==============///
 			if (line == "Water Position--") {
-				CurrentOther = TypeWater;
+				TypeObject = TypeWater;
 			}
 			else if (line == "--Water Position") {
-				CurrentOther = TypeNone;
+				TypeObject = TypeNone;
 			}
 			else {
-				if (CurrentOther == TypeWater) {
+				if (TypeObject == TypeWater) {
 					std::istringstream iss(line);
 
 					int TempX = 0;
@@ -216,13 +223,13 @@ void CMapGame::UpLoadStage() {
 			}
 			///=============LOAD Mountain Position=============///
 			if (line == "Mountain Position--") {
-				CurrentOther = TypeMountain;
+				TypeObject = TypeMountain;
 			}
 			else if (line == "--Mountain Position") {
-				CurrentOther = TypeNone;
+				TypeObject = TypeNone;
 			}
 			else {
-				if (CurrentOther == TypeMountain) {
+				if (TypeObject == TypeMountain) {
 					std::istringstream iss(line);
 
 					int TempX = 0;
@@ -248,13 +255,13 @@ void CMapGame::UpLoadStage() {
 			///=============LOAD Castle Position=============///
 
 			if (line == "Castle Position--") {
-				CurrentOther = TypeCastle;
+				TypeObject = TypeCastle;
 			}
 			else if (line == "--Castle Position") {
-				CurrentOther = TypeNone;
+				TypeObject = TypeNone;
 			}
 			else {
-				if (CurrentOther == TypeCastle) {
+				if (TypeObject == TypeCastle) {
 					std::istringstream iss(line);
 
 					int TempX = 0;
@@ -279,13 +286,13 @@ void CMapGame::UpLoadStage() {
 			///==============LOAD Fountain POSITION===============///
 
 			if (line == "Fountain Position--") {
-				CurrentOther = TypeFountain;
+				TypeObject = TypeFountain;
 			}
 			else if (line == "--Fountain Position") {
-				CurrentOther = TypeNone;
+				TypeObject = TypeNone;
 			}
 			else {
-				if (CurrentOther == TypeFountain) {
+				if (TypeObject == TypeFountain) {
 					std::istringstream iss(line);
 
 					int TempX = 0;
@@ -309,13 +316,13 @@ void CMapGame::UpLoadStage() {
 			}
 			///=======================LOAD Soil Position===============///
 			if (line == "Soil Position--") {
-				CurrentOther = TypeSoil;
+				TypeObject = TypeSoil;
 			}
 			else if (line == "--Soil Position") {
-				CurrentOther = TypeNone;
+				TypeObject = TypeNone;
 			}
 			else {
-				if (CurrentOther == TypeSoil) {
+				if (TypeObject == TypeSoil) {
 					std::istringstream iss(line);
 
 					int TempX = 0;
@@ -339,13 +346,13 @@ void CMapGame::UpLoadStage() {
 			}
 			///======================LOAD Wheat Position==============///
 			if (line == "Wheat Position--") {
-				CurrentOther = TypeWheat;
+				TypeObject = TypeWheat;
 			}
 			else if (line == "--Wheat Position") {
-				CurrentOther = TypeNone;
+				TypeObject = TypeNone;
 			}
 			else {
-				if (CurrentOther == TypeWheat) {
+				if (TypeObject == TypeWheat) {
 					std::istringstream iss(line);
 
 					int TempX = 0;
@@ -369,13 +376,13 @@ void CMapGame::UpLoadStage() {
 			}
 			///===========LOAD Tent Position============///
 			if (line == "Tent Position--") {
-				CurrentOther = TypeTent;
+				TypeObject = TypeTent;
 			}
 			else if (line == "--Tent Position") {
-				CurrentOther = TypeTent;
+				TypeObject = TypeTent;
 			}
 			else {
-				if (CurrentOther == TypeTent) {
+				if (TypeObject == TypeTent) {
 					std::istringstream iss(line);
 
 					int TempX = 0;
@@ -398,6 +405,36 @@ void CMapGame::UpLoadStage() {
 				}
 			}
 			///=========
+			if (line == "Flag Position--") {
+				TypeObject = TypeFlag;
+			}
+			else if (line == "--Flag Position") {
+				TypeObject = TypeFlag;
+			}
+			else {
+				if (TypeObject == TypeFlag) {
+					std::istringstream iss(line);
+
+					int TempX = 0;
+					int TempY = 0;
+					std::string FirstWord = "";
+
+					while (iss)
+					{
+						std::string word;
+						iss >> word;
+						if (FirstWord == "x:") {
+							TempX = atoi(word.c_str());
+						}
+						if (FirstWord == "y:") {
+							TempY = atoi(word.c_str());
+							Flags.push_back(new FlagPic(TempX, TempY, CameraX, CameraY, csdl_setup));
+						}
+						FirstWord = word;
+					}
+				}
+			}
+			///================
 		}
 	}
 	else {
@@ -454,6 +491,12 @@ void CMapGame::SaveStage() {
 		LoadStage << "x: " << (*it)->GetX() << "\ty: " << (*it)->GetY() << std::endl;
 	}
 	LoadStage << "--Wheat Position" << std::endl;
+	///===============SAVE Flag Position==========///
+	LoadStage << "Flag Position--" << std::endl;
+	for (std::vector<FlagPic*>::iterator it = Flags.begin(); it < Flags.end(); ++it) {
+		LoadStage << "x: " << (*it)->GetX() << "\ty: " << (*it)->GetY() << std::endl;
+	}
+	LoadStage << "--Flag Position" << std::endl;
 	///===============
 
 	LoadStage.close();
@@ -493,7 +536,7 @@ void CMapGame::Update() {
 				
 				case SDLK_2: 
 					Mix_PlayChannel(1, putSound, 0);
-					Waters.push_back(new WaterPic(-*CameraX + 330, -*CameraY + 200, CameraX, CameraY, csdl_setup));
+					Waters.push_back(new WaterPic(-*CameraX + 340, -*CameraY + 200, CameraX, CameraY, csdl_setup));
 					OnePressed = true;
 					break;
 				
@@ -505,13 +548,13 @@ void CMapGame::Update() {
 				
 				case SDLK_4: 
 					Mix_PlayChannel(1, putSound, 0);
-					Castles.push_back(new CastlePic(-*CameraX + 320, -*CameraY + 70, CameraX, CameraY, csdl_setup));
+					Castles.push_back(new CastlePic(-*CameraX + 340, -*CameraY + 70, CameraX, CameraY, csdl_setup));
 					OnePressed = true;
 					break;
 				
 				case SDLK_5: 
 					Mix_PlayChannel(1, putSound, 0);
-					Fountains.push_back(new FountainPic(-*CameraX + 320, -*CameraY + 180, CameraX, CameraY, csdl_setup));
+					Fountains.push_back(new FountainPic(-*CameraX + 340, -*CameraY + 180, CameraX, CameraY, csdl_setup));
 					OnePressed = true;
 					break;
 
@@ -529,10 +572,14 @@ void CMapGame::Update() {
 					
 				case SDLK_8:
 					Mix_PlayChannel(1, putSound, 0);
-					Tents.push_back(new TentPic(-*CameraX + 320, -*CameraY + 190, CameraX, CameraY, csdl_setup));
+					Tents.push_back(new TentPic(-*CameraX + 350, -*CameraY + 190, CameraX, CameraY, csdl_setup));
 					OnePressed = true;
 					break;
-				
+				case SDLK_9:
+					Mix_PlayChannel(1, putSound, 0);
+					Flags.push_back(new FlagPic(-*CameraX + 320, -*CameraY + 190, CameraX, CameraY, csdl_setup));
+					OnePressed = true;
+					break;
 				}
 				Mix_Volume(1, 10);
 			}
@@ -574,6 +621,10 @@ void CMapGame::Update() {
 				break;
 
 			case SDLK_8:
+				OnePressed = false;
+				break;
+
+			case SDLK_9:
 				OnePressed = false;
 				break;
 			}
@@ -712,6 +763,13 @@ void CMapGame::Update() {
 					}
 					break;
 					///===========
+
+				case SDLK_9:
+					if (Flags.size() > 0) {
+						delete Flags[Flags.size() - 1];
+						Flags.pop_back();
+					}
+					break;
 				}
 			}
 		}
@@ -747,6 +805,9 @@ void CMapGame::Update() {
 					OnePressed = false;
 					break;
 				case SDLK_8:
+					OnePressed = false;
+					break;
+				case SDLK_9:
 					OnePressed = false;
 					break;
 				}

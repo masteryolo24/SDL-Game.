@@ -10,7 +10,7 @@ public:
 
 	void Begin();
 	void End();
-	
+
 private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;

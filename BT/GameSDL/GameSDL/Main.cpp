@@ -80,6 +80,7 @@ CMain::~CMain(void)
 
 void CMain::GameLoop(void) {
 		SDL_GetMouseState(&MouseX, &MouseY);
+		//std::cout << MouseX << "     " << MouseY << std::endl;
 
 		ForestStage->DrawBackGround();
 
@@ -185,7 +186,7 @@ void CMain::OnRender() {
 		SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter_image, NULL, &imageRect);
 		switch (csdl_setup->GetMainEvent()->key.keysym.sym) {
 		case SDLK_1:
-			//delete character;
+			delete character;
 			SDL_RenderClear(csdl_setup->GetRenderer());
 			SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter1, NULL, &imageRect);
 			character = new MainCharacter(csdl_setup, "image/character1.png", &MouseX, &MouseY, &CameraX, &CameraY, ForestStage);

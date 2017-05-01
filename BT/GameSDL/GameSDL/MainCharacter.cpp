@@ -11,7 +11,7 @@ MainCharacter::MainCharacter(CSDL_Setup* passed_SDL_Setup, std::string FilePath,
 	MouseX = passed_MouseX;
 	MouseY = passed_MouseY;
 
-	character = new CSprite(csdl_setup->GetRenderer(), FilePath, 300, 250, 42, 42, CameraX, CameraY, CCollisionDetection(306, 256, 37, 42));
+	character = new CSprite(csdl_setup->GetRenderer(), FilePath, 500, 300, 42, 42, CameraX, CameraY, CCollisionDetection(506, 306, 37, 42));
 
 	character->SetUpAnimation(3, 4);
 	timeCheck = SDL_GetTicks();
@@ -25,10 +25,10 @@ MainCharacter::~MainCharacter()
 	delete character;
 }
 
-double MainCharacter::GetDistance(int X1, int Y1, int X2, int Y2) {
-	double DifferenceX = X1 - X2;
-	double DifferenceY = Y1 - Y2;
-	double distance = sqrt((DifferenceX * DifferenceX) + (DifferenceY * DifferenceY));
+float MainCharacter::GetDistance(int X1, int Y1, int X2, int Y2) {
+	float DifferenceX = X1 - X2;
+	float DifferenceY = Y1 - Y2;
+	float distance = sqrt(pow(DifferenceX, 2) + pow(DifferenceY, 2));
 	return distance;
 }
 
@@ -39,6 +39,7 @@ void MainCharacter::Draw() {
 void MainCharacter::UpdateAnimation() {
 	float angle = atan2(Follow_Point_Y - *CameraY, Follow_Point_X - *CameraX);
 	angle = angle *(180 / 3.14) + 180;
+	//std::cout << angle << std::endl;
 	if (!stopAnimation) {
 		if (angle > 45 && angle <= 135) {
 			if (distance > 15)
@@ -68,13 +69,14 @@ void MainCharacter::UpdateControls() {
 	if (csdl_setup->GetMainEvent()->type == SDL_MOUSEBUTTONDOWN || csdl_setup->GetMainEvent()->type == SDL_MOUSEMOTION) {
 		if (csdl_setup->GetMainEvent()->button.button == SDL_BUTTON_LEFT)
 		{
-			Follow_Point_X = *CameraX - *MouseX + 300;
-			Follow_Point_Y = *CameraY - *MouseY + 250;
+			Follow_Point_X = *CameraX - *MouseX + 500;
+			Follow_Point_Y = *CameraY - *MouseY + 300;
 			Follow = true;
 		}
+		//std::cout << Follow_Point_X << "   " << Follow_Point_Y << std::endl;
 	}
 
-	if (timeCheck + 5 < SDL_GetTicks() && Follow)
+	if (timeCheck + 2 < SDL_GetTicks() && Follow)
 	{
 		distance = GetDistance(*CameraX, *CameraY, Follow_Point_X, Follow_Point_Y);
 		if (distance == 0)
@@ -238,13 +240,17 @@ void MainCharacter::UpdateControls() {
 
 			if (!Colliding) {
 				if (*CameraY != Follow_Point_Y) {
-					*CameraY = *CameraY - (((*CameraY - Follow_Point_Y) / distance) *1.5f);
+					*CameraY = *CameraY - ((*CameraY - Follow_Point_Y) / distance );
 				}
 
 				if (*CameraX != Follow_Point_X) {
-					*CameraX = *CameraX - (((*CameraX - Follow_Point_X) / distance) *1.5f);
+					*CameraX = *CameraX - ((*CameraX - Follow_Point_X) / distance );
 				}
+				//std::cout << "Mouse Position:  " << *MouseX << "  " << *MouseY << std::endl;
+				//std::cout << "Camera Position:  " << *CameraX << "  " << *CameraY << std::endl;
+				//std::cout << "Follow Point:  " << Follow_Point_X << " " << Follow_Point_Y << std::endl;
 			}
+			
 		}
 		else
 			Follow = false;

@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="CastlePic.h" />
     <ClInclude Include="CollisionDetection.h" />
+    <ClInclude Include="FlagPic.h" />
     <ClInclude Include="FountainPic.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="MainCharacter.h" />
@@ -167,6 +168,7 @@
   <ItemGroup>
     <ClCompile Include="CastlePic.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
+    <ClCompile Include="FlagPic.cpp" />
     <ClCompile Include="FountainPic.cpp" />
     <ClCompile Include="GameSDL.cpp" />
     <ClCompile Include="Main.cpp" />

@@ -14,6 +14,7 @@
 #include "SoilPic.h"
 #include "WheatPic.h"
 #include "TentPic.h"
+#include "FlagPic.h"
 class CMapGame
 {
 public:
@@ -43,6 +44,7 @@ public:
 	std::vector <SoilPic*> GetSoil() { return Soils; }
 	std::vector <WheatPic*> GetWheat() { return Wheats; }
 	std::vector <TentPic*> GetTent() { return Tents; }
+	std::vector <FlagPic*> GetFlag() { return Flags; }
 
 private:
 	int Mode;
@@ -63,6 +65,7 @@ private:
 	std::vector <SoilPic*> Soils;
 	std::vector <WheatPic*> Wheats;
 	std::vector <TentPic*> Tents;
+	std::vector <FlagPic*> Flags;
 
 	Mix_Chunk* putSound;
 	Mix_Chunk* soundSave;

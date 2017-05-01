@@ -7,7 +7,7 @@ public:
 	CCollisionDetection(int x, int y, int w, int h);
 	~CCollisionDetection(void);
 
-	void SetRectangle(int x, int y, int w, int h);
+	
 	SDL_Rect GetRectangle() { return CollisionRect; }
 
 	void SetX(int x) { CollisionRect.x = x + OffSetX; }
@@ -15,7 +15,7 @@ public:
 private:
 	int OffSetX;
 	int OffSetY;
-
+	void SetRectangle(int x, int y, int w, int h);
 	SDL_Rect CollisionRect;
 
 };

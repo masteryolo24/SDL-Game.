@@ -69,6 +69,9 @@
     <ClInclude Include="WheatPic.h">
       <Filter>Header Files\ObjectH</Filter>
     </ClInclude>
+    <ClInclude Include="FlagPic.h">
+      <Filter>Header Files\ObjectH</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameSDL.cpp">
@@ -114,6 +117,9 @@
       <Filter>Source Files\Object</Filter>
     </ClCompile>
     <ClCompile Include="WheatPic.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="FlagPic.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
   </ItemGroup>

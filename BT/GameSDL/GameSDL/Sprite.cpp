@@ -7,16 +7,11 @@ CSprite::CSprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int
 	renderer = passed_renderer;
 	image = NULL;
 	image = IMG_LoadTexture(renderer, FilePath.c_str());
-
 	if (image == NULL) {
 		std::cout << "Can not load " << FilePath.c_str() << std::endl;
 	}
 	CollisionImage = NULL;
 	CollisionImage = IMG_LoadTexture(renderer, "image/CollisionBox/box.png");
-
-	if (CollisionImage == NULL) {
-		std::cout << "Can not load CollisionImage" << std::endl;
-	}
 
 	rect.x = x;
 	rect.y = y;
@@ -33,11 +28,8 @@ CSprite::CSprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int
 	X_pos = x;
 	Y_pos = y;
 
-	Orgin_X = 0;
-	Orgin_Y = 0;
-
 	CurrentFrame = 0;
-	animationDelay = 0;
+	animationDelay = SDL_GetTicks();
 
 	Amount_Frame_X = 0;
 	Amount_Frame_Y = 0;
@@ -75,6 +67,7 @@ void CSprite::PlayAnimation(int BeginFrame, int EndFrame, int Row, float Speed) 
 
 		animationDelay = SDL_GetTicks();
 	}
+	
 }
 
 
@@ -82,8 +75,8 @@ void CSprite::Draw() {
 	Camera.x = rect.x + *CameraX;
 	Camera.y = rect.y + *CameraY;
 
-	CollisionRect.SetX(rect.x + *CameraX);
-	CollisionRect.SetY(rect.y + *CameraY);
+	CollisionRect.SetX(Camera.x);
+	CollisionRect.SetY(Camera.y);
 
 	SDL_RenderCopy(renderer, image, &crop, &Camera);
 
@@ -96,45 +89,12 @@ void CSprite::DrawSteady() {
 	SDL_RenderCopy(renderer, CollisionImage, NULL, &CollisionRect.GetRectangle());
 }
 
-void CSprite::SetX(float X) {
-	X_pos = X;
-	rect.x = int(X_pos - Orgin_X);
-}
-
-void CSprite::SetY(float Y) {
-	Y_pos = Y;
-	rect.y = int(Y_pos - Orgin_Y);
-}
 
 void CSprite::SetPosition(float X, float Y) {
 	X_pos = X;
 	Y_pos = Y;
-	rect.x = int(X_pos - Orgin_X);
-	rect.y = int(Y_pos - Orgin_Y);
-}
-
-float CSprite::GetX() {
-	return X_pos;
-}
-float CSprite::GetY() {
-	return Y_pos;
-}
-
-
-void CSprite::SetWidth(int W) {
-	rect.w = W;
-}
-
-void CSprite::SetHeight(int H) {
-	rect.h = H;
-}
-
-int CSprite::GetWidth() {
-	return rect.w;
-}
-
-int CSprite::GetHeight() {
-	return rect.h;
+	rect.x = int(X_pos);
+	rect.y = int(Y_pos);
 }
 
 bool CSprite::isColliding(CCollisionDetection theCollider) {

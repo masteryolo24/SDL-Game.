@@ -10,7 +10,7 @@ public:
 	MainCharacter(CSDL_Setup* passed_SDL_Setup, std::string FilePath, int *passed_MouseX, int *passed_MouseY, float *CameraX, float *CameraY, CMapGame* passed_Enviroment);
 	~MainCharacter();
 
-	double GetDistance(int X1, int Y1, int X2, int Y2);
+	float GetDistance(int X1, int Y1, int X2, int Y2);
 
 	void Update();
 	void Draw();
