@@ -25,9 +25,6 @@ public:
 	void DrawObject();
 	void Update();
 
-	void SaveStage();
-	void UpLoadStage();
-
 	enum ModeStage
 	{
 		GamePlay,
@@ -68,7 +65,6 @@ private:
 	std::vector <FlagPic*> Flags;
 
 	Mix_Chunk* putSound;
-	Mix_Chunk* soundSave;
 	Mix_Chunk* soundSelect;
 
 	SDL_Texture* levelCreateON;
@@ -78,8 +74,5 @@ private:
 	SDL_Texture* deleteCreateON;
 	SDL_Texture* deleteCreateOFF;
 	SDL_Rect deleteRect;
-
-	SDL_Texture* Saved;
-	SDL_Rect savedRect;
 };
 

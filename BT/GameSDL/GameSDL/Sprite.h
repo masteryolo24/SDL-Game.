@@ -11,11 +11,6 @@ public:
 	void Draw();
 	void DrawSteady();
 
-	void SetPosition(float X, float Y);
-
-	float GetX() { return X_pos; }
-	float GetY() { return Y_pos; }
-
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, float Speed);
 	void SetUpAnimation(int passed_Amount_X, int passed_Amount_Y);
 
@@ -30,9 +25,6 @@ private:
 
 	float *CameraX;
 	float *CameraY;
-
-	float X_pos;
-	float Y_pos;
 
 	SDL_Texture* image;
 	SDL_Texture* CollisionImage;

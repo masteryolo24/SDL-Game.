@@ -25,9 +25,6 @@ CSprite::CSprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int
 	crop.w = img_width;
 	crop.h = img_height;
 
-	X_pos = x;
-	Y_pos = y;
-
 	CurrentFrame = 0;
 	animationDelay = SDL_GetTicks();
 
@@ -90,12 +87,6 @@ void CSprite::DrawSteady() {
 }
 
 
-void CSprite::SetPosition(float X, float Y) {
-	X_pos = X;
-	Y_pos = Y;
-	rect.x = int(X_pos);
-	rect.y = int(Y_pos);
-}
 
 bool CSprite::isColliding(CCollisionDetection theCollider) {
 	return !(CollisionRect.GetRectangle().x + CollisionRect.GetRectangle().w < theCollider.GetRectangle().x ||
