@@ -57,15 +57,7 @@ private:
 	SDL_Texture* control_imgae = NULL;
 	SDL_Texture* story_image = NULL;
 	SDL_Texture* selectCharacter_image = NULL;
+	SDL_Texture* controlingame_image = NULL;
 	SDL_Rect imageRect;
 
-	SDL_Texture* selectCharacter1 = NULL;
-	SDL_Texture* selectCharacter2 = NULL;
-	SDL_Texture* selectCharacter3 = NULL;
-	SDL_Texture* selectCharacter4 = NULL;
-	SDL_Texture* selectCharacter5 = NULL;
-	SDL_Texture* selectCharacter6 = NULL;
-	SDL_Texture* selectCharacter7 = NULL;
-	SDL_Texture* selectCharacter8 = NULL;
-	SDL_Texture* selectCharacter9 = NULL;
 };

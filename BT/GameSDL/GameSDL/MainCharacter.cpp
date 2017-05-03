@@ -246,9 +246,6 @@ void MainCharacter::UpdateControls() {
 				if (*CameraX != Follow_Point_X) {
 					*CameraX = *CameraX - ((*CameraX - Follow_Point_X) / distance );
 				}
-				//std::cout << "Mouse Position:  " << *MouseX << "  " << *MouseY << std::endl;
-				//std::cout << "Camera Position:  " << *CameraX << "  " << *CameraY << std::endl;
-				//std::cout << "Follow Point:  " << Follow_Point_X << " " << Follow_Point_Y << std::endl;
 			}
 			
 		}

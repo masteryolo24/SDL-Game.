@@ -1,12 +1,7 @@
-﻿  MapGame.cpp
-c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(141): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(147): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(153): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(159): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(165): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(171): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(177): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(183): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(188): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+﻿  Main.cpp
+  Generating Code...
+  Compiling...
+  GameSDL.cpp
+  Generating Code...
   GameSDL.vcxproj -> C:\Users\DELL\Desktop\BT\GameSDL\Debug\GameSDL.exe
   GameSDL.vcxproj -> C:\Users\DELL\Desktop\BT\GameSDL\Debug\GameSDL.pdb (Full PDB)

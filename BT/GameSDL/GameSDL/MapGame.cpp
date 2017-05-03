@@ -144,13 +144,13 @@ void CMapGame::Update() {
 				
 				case SDLK_2: 
 					Mix_PlayChannel(1, putSound, 0);
-					Waters.push_back(new WaterPic(-*CameraX + 540, -*CameraY + 250, CameraX, CameraY, csdl_setup));
+					Waters.push_back(new WaterPic(-*CameraX + 560, -*CameraY + 250, CameraX, CameraY, csdl_setup));
 					OnePressed = true;
 					break;
 				
 				case SDLK_3: 
 					Mix_PlayChannel(1, putSound, 0);
-					Mountains.push_back(new MountainPic(-*CameraX + 520, -*CameraY + 55, CameraX, CameraY, csdl_setup));
+					Mountains.push_back(new MountainPic(-*CameraX + 540, -*CameraY + 55, CameraX, CameraY, csdl_setup));
 					OnePressed = true;
 					break;
 				
