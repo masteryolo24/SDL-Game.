@@ -1,7 +1,39 @@
-﻿  Main.cpp
-  Generating Code...
-  Compiling...
-  GameSDL.cpp
+﻿  MapGame.cpp
+c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(141): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(147): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(153): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(159): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(165): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(171): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(177): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(183): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\mapgame.cpp(188): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  MainCharacter.cpp
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(29): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(30): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(41): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(72): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(73): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(79): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(81): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(91): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(107): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(108): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(116): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(132): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(133): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(141): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(157): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(158): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(166): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(182): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(183): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(191): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(207): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(208): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(216): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(232): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell\desktop\bt\gamesdl\gamesdl\maincharacter.cpp(233): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   Generating Code...
   GameSDL.vcxproj -> C:\Users\DELL\Desktop\BT\GameSDL\Debug\GameSDL.exe
   GameSDL.vcxproj -> C:\Users\DELL\Desktop\BT\GameSDL\Debug\GameSDL.pdb (Full PDB)

@@ -241,7 +241,6 @@ void CMapGame::Update() {
 	}
 }
 
-	///================= CREATE LEVEL MODE ================///
 
 	if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN) {
 		if (!OnePressed && csdl_setup->GetMainEvent()->key.keysym.sym == SDLK_TAB) {
@@ -265,8 +264,6 @@ void CMapGame::Update() {
 			OnePressed = false;
 		}
 	}
-
-	///============== CREATE DELETE MODE ================///
 
 
 	if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN) {

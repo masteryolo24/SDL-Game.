@@ -39,7 +39,6 @@ void MainCharacter::Draw() {
 void MainCharacter::UpdateAnimation() {
 	float angle = atan2(Follow_Point_Y - *CameraY, Follow_Point_X - *CameraX);
 	angle = angle *(180 / 3.14) + 180;
-	//std::cout << angle << std::endl;
 	if (!stopAnimation) {
 		if (angle > 45 && angle <= 135) {
 			if (distance > 15)
@@ -73,7 +72,7 @@ void MainCharacter::UpdateControls() {
 			Follow_Point_Y = *CameraY - *MouseY + 300;
 			Follow = true;
 		}
-		//std::cout << Follow_Point_X << "   " << Follow_Point_Y << std::endl;
+
 	}
 
 	if (timeCheck + 2 < SDL_GetTicks() && Follow)
@@ -239,15 +238,10 @@ void MainCharacter::UpdateControls() {
 			}
 
 			if (!Colliding) {
-				if (*CameraY != Follow_Point_Y) {
-					*CameraY = *CameraY - ((*CameraY - Follow_Point_Y) / distance );
-				}
-
-				if (*CameraX != Follow_Point_X) {
-					*CameraX = *CameraX - ((*CameraX - Follow_Point_X) / distance );
-				}
+				*CameraX = *CameraX - ((*CameraX - Follow_Point_X) / distance);
+				*CameraY = *CameraY - ((*CameraY - Follow_Point_Y) / distance);
 			}
-			
+
 		}
 		else
 			Follow = false;
