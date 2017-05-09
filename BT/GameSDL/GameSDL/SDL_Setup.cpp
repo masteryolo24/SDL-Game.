@@ -22,7 +22,7 @@ CSDL_Setup::CSDL_Setup(bool quit, int ScreenWidth, int ScreenHeight)
 	iconSurface = IMG_Load("image/UET.ico");
 	SDL_SetWindowIcon(window, iconSurface);
 
-	cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
+	SDL_ShowCursor(SDL_DISABLE);
 	SDL_SetCursor(cursor);
 
 	renderer = NULL;

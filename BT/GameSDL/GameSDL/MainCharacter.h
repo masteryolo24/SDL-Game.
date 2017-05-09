@@ -19,6 +19,7 @@ private:
 
 	void UpdateAnimation();
 	void UpdateControls();
+	void UpdateControls_2();
 
 	float *CameraX;
 	float *CameraY;
@@ -35,8 +36,16 @@ private:
 	int Follow_Point_X;
 	int Follow_Point_Y;
 
+	int Follow_Point_X1;
+	int Follow_Point_Y1;
+
 	float distance;
 	bool stopAnimation;
+
+	SDL_Texture* click;
+	SDL_Texture* clickEffect;
+	SDL_Rect clickRect;
+	SDL_Rect effectRect;
 };
 
 

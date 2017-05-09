@@ -7,22 +7,27 @@ CMapGame::CMapGame(int ScreenWidth, int ScreenHeight, float *passed_CameraX, flo
 	CameraY = passed_CameraY;
 	
 	grass = new CSprite(csdl_setup->GetRenderer(), "image/map/map.png", 0 , 0 , 4000, 3171, CameraX, CameraY, CCollisionDetection());
+
 	Mode = Level;
 	ModeDelete = NonDelete;
+	UpLoadStage();
 	OnePressed = false;
 
 	levelCreateON = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/levelCreateON.png");
 	levelCreateOFF = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/levelCreateOFF.png");
 	deleteCreateON = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/deleteCreateON.png");
 	deleteCreateOFF = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/deleteCreateOFF.png");
+	Saved = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/savedGame.png");
 
-	levelRect.x = levelRect.y = deleteRect.y  = 0;
-	levelRect.w = deleteRect.w =  300;
-	levelRect.h = deleteRect.h =  35;
+	levelRect.x = levelRect.y = deleteRect.y = savedRect.y = 0;
+	levelRect.w = deleteRect.w = savedRect.w = 300;
+	levelRect.h = deleteRect.h = savedRect.h = 35;
 	deleteRect.x = 350;
+	savedRect.x = 900;
 
 	putSound = Mix_LoadWAV("sound/putSound.wav");
 	soundSelect = Mix_LoadWAV("sound/clickSound.wav");
+	soundSave = Mix_LoadWAV("sound/savedGame.wav");
 }
 
 CMapGame::~CMapGame(void){
@@ -73,18 +78,18 @@ CMapGame::~CMapGame(void){
 
 
 	Mix_FreeChunk(putSound);
+	Mix_FreeChunk(soundSave);
 	Mix_FreeChunk(soundSelect);
 
 	SDL_DestroyTexture(levelCreateON);
 	SDL_DestroyTexture(levelCreateOFF);
 	SDL_DestroyTexture(deleteCreateON);
 	SDL_DestroyTexture(deleteCreateOFF);
+	SDL_DestroyTexture(Saved);
 }
 
 void CMapGame::DrawBackGround() {
-
 	grass->Draw();
-
 	for (std::vector<SoilPic*>::iterator it = Soils.begin(); it != Soils.end(); ++it) {
 		(*it)->DrawSoil();
 	}
@@ -129,9 +134,395 @@ void CMapGame::DrawObject() {
 		SDL_RenderCopy(csdl_setup->GetRenderer(), deleteCreateOFF, NULL, &deleteRect);
 	if (ModeDelete == Delete && (Mode == GamePlay || Mode == Level))
 		SDL_RenderCopy(csdl_setup->GetRenderer(), deleteCreateON, NULL, &deleteRect);
+	if (SavedGame == true)
+		SDL_RenderCopy(csdl_setup->GetRenderer(), Saved, NULL, &savedRect);
+}
+
+void CMapGame::UpLoadStage() {
+	std::fstream LoadStage("Saved/Map.txt");
+	std::string line;
+
+	enum ObjectOther {
+		TypeNone,
+		TypeTree,
+		TypeWater,
+		TypeMountain,
+		TypeCastle,
+		TypeFountain,
+		TypeSoil,
+		TypeWheat,
+		TypeTent,
+		TypeFlag
+	};
+	int TypeObject = TypeNone;
+	if (LoadStage.is_open()) {
+		while (LoadStage.good())
+		{
+			std::getline(LoadStage, line);
+
+			///================Tree Position===========///
+			if (line == "Tree Position--") {
+				TypeObject = TypeTree;
+			}
+			else if (line == "--Tree Position") {
+				TypeObject = TypeNone;
+			}
+			else {
+				if (TypeObject == TypeTree) {
+					std::istringstream iss(line);
+
+					int TempX = 0;
+					int TempY = 0;
+					std::string FirstWord = "";
+
+					while (iss)
+					{
+						std::string word;
+						iss >> word;
+						if (FirstWord == "x:") {
+							TempX = atoi(word.c_str());
+						}
+						if (FirstWord == "y:") {
+							TempY = atoi(word.c_str());
+							moreTrees.push_back(new Tree(TempX, TempY, CameraX, CameraY, csdl_setup));
+						}
+						FirstWord = word;
+					}
+				}
+			}
+			///================LOAD Water Position==============///
+			if (line == "Water Position--") {
+				TypeObject = TypeWater;
+			}
+			else if (line == "--Water Position") {
+				TypeObject = TypeNone;
+			}
+			else {
+				if (TypeObject == TypeWater) {
+					std::istringstream iss(line);
+
+					int TempX = 0;
+					int TempY = 0;
+					std::string FirstWord = "";
+
+					while (iss)
+					{
+						std::string word;
+						iss >> word;
+						if (FirstWord == "x:") {
+							TempX = atoi(word.c_str());
+						}
+						if (FirstWord == "y:") {
+							TempY = atoi(word.c_str());
+							Waters.push_back(new WaterPic(TempX, TempY, CameraX, CameraY, csdl_setup));
+						}
+						FirstWord = word;
+					}
+				}
+			}
+			///=============LOAD Mountain Position=============///
+			if (line == "Mountain Position--") {
+				TypeObject = TypeMountain;
+			}
+			else if (line == "--Mountain Position") {
+				TypeObject = TypeNone;
+			}
+			else {
+				if (TypeObject == TypeMountain) {
+					std::istringstream iss(line);
+
+					int TempX = 0;
+					int TempY = 0;
+					std::string FirstWord = "";
+
+					while (iss)
+					{
+						std::string word;
+						iss >> word;
+						if (FirstWord == "x:") {
+							TempX = atoi(word.c_str());
+						}
+						if (FirstWord == "y:") {
+							TempY = atoi(word.c_str());
+							Mountains.push_back(new MountainPic(TempX, TempY, CameraX, CameraY, csdl_setup));
+						}
+						FirstWord = word;
+					}
+				}
+			}
+
+			///=============LOAD Castle Position=============///
+
+			if (line == "Castle Position--") {
+				TypeObject = TypeCastle;
+			}
+			else if (line == "--Castle Position") {
+				TypeObject = TypeNone;
+			}
+			else {
+				if (TypeObject == TypeCastle) {
+					std::istringstream iss(line);
+
+					int TempX = 0;
+					int TempY = 0;
+					std::string FirstWord = "";
+
+					while (iss)
+					{
+						std::string word;
+						iss >> word;
+						if (FirstWord == "x:") {
+							TempX = atoi(word.c_str());
+						}
+						if (FirstWord == "y:") {
+							TempY = atoi(word.c_str());
+							Castles.push_back(new CastlePic(TempX, TempY, CameraX, CameraY, csdl_setup));
+						}
+						FirstWord = word;
+					}
+				}
+			}
+			///==============LOAD Fountain POSITION===============///
+
+			if (line == "Fountain Position--") {
+				TypeObject = TypeFountain;
+			}
+			else if (line == "--Fountain Position") {
+				TypeObject = TypeNone;
+			}
+			else {
+				if (TypeObject == TypeFountain) {
+					std::istringstream iss(line);
+
+					int TempX = 0;
+					int TempY = 0;
+					std::string FirstWord = "";
+
+					while (iss)
+					{
+						std::string word;
+						iss >> word;
+						if (FirstWord == "x:") {
+							TempX = atoi(word.c_str());
+						}
+						if (FirstWord == "y:") {
+							TempY = atoi(word.c_str());
+							Fountains.push_back(new FountainPic(TempX, TempY, CameraX, CameraY, csdl_setup));
+						}
+						FirstWord = word;
+					}
+				}
+			}
+			///=======================LOAD Soil Position===============///
+			if (line == "Soil Position--") {
+				TypeObject = TypeSoil;
+			}
+			else if (line == "--Soil Position") {
+				TypeObject = TypeNone;
+			}
+			else {
+				if (TypeObject == TypeSoil) {
+					std::istringstream iss(line);
+
+					int TempX = 0;
+					int TempY = 0;
+					std::string FirstWord = "";
+
+					while (iss)
+					{
+						std::string word;
+						iss >> word;
+						if (FirstWord == "x:") {
+							TempX = atoi(word.c_str());
+						}
+						if (FirstWord == "y:") {
+							TempY = atoi(word.c_str());
+							Soils.push_back(new SoilPic(TempX, TempY, CameraX, CameraY, csdl_setup));
+						}
+						FirstWord = word;
+					}
+				}
+			}
+			///======================LOAD Wheat Position==============///
+			if (line == "Wheat Position--") {
+				TypeObject = TypeWheat;
+			}
+			else if (line == "--Wheat Position") {
+				TypeObject = TypeNone;
+			}
+			else {
+				if (TypeObject == TypeWheat) {
+					std::istringstream iss(line);
+
+					int TempX = 0;
+					int TempY = 0;
+					std::string FirstWord = "";
+
+					while (iss)
+					{
+						std::string word;
+						iss >> word;
+						if (FirstWord == "x:") {
+							TempX = atoi(word.c_str());
+						}
+						if (FirstWord == "y:") {
+							TempY = atoi(word.c_str());
+							Wheats.push_back(new WheatPic(TempX, TempY, CameraX, CameraY, csdl_setup));
+						}
+						FirstWord = word;
+					}
+				}
+			}
+			///===========LOAD Tent Position============///
+			if (line == "Tent Position--") {
+				TypeObject = TypeTent;
+			}
+			else if (line == "--Tent Position") {
+				TypeObject = TypeTent;
+			}
+			else {
+				if (TypeObject == TypeTent) {
+					std::istringstream iss(line);
+
+					int TempX = 0;
+					int TempY = 0;
+					std::string FirstWord = "";
+
+					while (iss)
+					{
+						std::string word;
+						iss >> word;
+						if (FirstWord == "x:") {
+							TempX = atoi(word.c_str());
+						}
+						if (FirstWord == "y:") {
+							TempY = atoi(word.c_str());
+							Tents.push_back(new TentPic(TempX, TempY, CameraX, CameraY, csdl_setup));
+						}
+						FirstWord = word;
+					}
+				}
+			}
+			///=========
+			if (line == "Flag Position--") {
+				TypeObject = TypeFlag;
+			}
+			else if (line == "--Flag Position") {
+				TypeObject = TypeFlag;
+			}
+			else {
+				if (TypeObject == TypeFlag) {
+					std::istringstream iss(line);
+
+					int TempX = 0;
+					int TempY = 0;
+					std::string FirstWord = "";
+
+					while (iss)
+					{
+						std::string word;
+						iss >> word;
+						if (FirstWord == "x:") {
+							TempX = atoi(word.c_str());
+						}
+						if (FirstWord == "y:") {
+							TempY = atoi(word.c_str());
+							Flags.push_back(new FlagPic(TempX, TempY, CameraX, CameraY, csdl_setup));
+						}
+						FirstWord = word;
+					}
+				}
+			}
+			///================
+		}
+	}
+	else {
+		std::cout << "You didn't save stage" << std::endl;
+	}
+}
+
+void CMapGame::SaveStage() {
+	std::ofstream LoadStage;
+	LoadStage.open("Saved/Map.txt");
+	///==========SAVE Tree Position==============///
+	LoadStage << "Tree Position--" << std::endl;
+	for (std::vector<Tree*>::iterator it = moreTrees.begin(); it < moreTrees.end(); ++it) {
+		LoadStage << "x: " << (*it)->GetX() << "\ty: " << (*it)->GetY() << std::endl;
+	}
+	LoadStage << "--Tree Position" << std::endl;
+
+	///===============SAVE Water Position===========///
+	LoadStage << "Water Position--" << std::endl;
+	for (std::vector<WaterPic*>::iterator it = Waters.begin(); it < Waters.end(); ++it) {
+		LoadStage << "x: " << (*it)->GetX() << "\ty: " << (*it)->GetY() << std::endl;
+	}
+	LoadStage << "--Water Position" << std::endl;
+
+	///===========SAVE Mountain Position===============///
+	LoadStage << "Mountain Position--" << std::endl;
+	for (std::vector<MountainPic*>::iterator it = Mountains.begin(); it < Mountains.end(); ++it) {
+		LoadStage << "x: " << (*it)->GetX() << "\ty: " << (*it)->GetY() << std::endl;
+	}
+	LoadStage << "--Mountain Position" << std::endl;
+
+	///==========SAVE Castle Position==============///
+	LoadStage << "Castle Position--" << std::endl;
+	for (std::vector<CastlePic*>::iterator it = Castles.begin(); it < Castles.end(); ++it) {
+		LoadStage << "x: " << (*it)->GetX() << "\ty: " << (*it)->GetY() << std::endl;
+	}
+	LoadStage << "--Castle Position" << std::endl;
+
+	///===========SAVE Fountain Position=========///
+	LoadStage << "Fountain Position--" << std::endl;
+	for (std::vector<FountainPic*>::iterator it = Fountains.begin(); it < Fountains.end(); ++it) {
+		LoadStage << "x: " << (*it)->GetX() << "\ty: " << (*it)->GetY() << std::endl;
+	}
+	LoadStage << "--Fountain Position" << std::endl;
+	///==========SAVE Soil Position=============///
+	LoadStage << "Soil Position--" << std::endl;
+	for (std::vector<SoilPic*>::iterator it = Soils.begin(); it < Soils.end(); ++it) {
+		LoadStage << "x: " << (*it)->GetX() << "\ty: " << (*it)->GetY() << std::endl;
+	}
+	LoadStage << "--Soil Position" << std::endl;
+	///==========SAVE Wheat Position==============///
+	LoadStage << "Wheat Position--" << std::endl;
+	for (std::vector<WheatPic*>::iterator it = Wheats.begin(); it < Wheats.end(); ++it) {
+		LoadStage << "x: " << (*it)->GetX() << "\ty: " << (*it)->GetY() << std::endl;
+	}
+	LoadStage << "--Wheat Position" << std::endl;
+	///===============SAVE Flag Position==========///
+	LoadStage << "Flag Position--" << std::endl;
+	for (std::vector<FlagPic*>::iterator it = Flags.begin(); it < Flags.end(); ++it) {
+		LoadStage << "x: " << (*it)->GetX() << "\ty: " << (*it)->GetY() << std::endl;
+	}
+	LoadStage << "--Flag Position" << std::endl;
+	///===============
+
+	LoadStage.close();
+	std::cout << "Level Save!" << std::endl;
 }
 
 void CMapGame::Update() {
+	if ((Mode == Level || Mode == GamePlay) && ModeDelete == NonDelete) {
+		if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN) {
+			if (!OnePressed && csdl_setup->GetMainEvent()->key.keysym.sym == SDLK_s) {
+				Mix_PlayChannel(2, soundSave, 0);
+				Mix_Volume(2, 20);
+				SaveStage();
+				OnePressed = true;
+				SavedGame = true;
+			}
+		}
+	}
+
+
+	if (csdl_setup->GetMainEvent()->type == SDL_KEYUP) {
+		if (OnePressed && csdl_setup->GetMainEvent()->key.keysym.sym == SDLK_s) {
+			OnePressed = false;
+			SavedGame = false;
+		}
+	}
+
 	if (Mode == Level){
 		if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN) {
 			if (!OnePressed) {
@@ -144,13 +535,13 @@ void CMapGame::Update() {
 				
 				case SDLK_2: 
 					Mix_PlayChannel(1, putSound, 0);
-					Waters.push_back(new WaterPic(-*CameraX + 560, -*CameraY + 250, CameraX, CameraY, csdl_setup));
+					Waters.push_back(new WaterPic(-*CameraX + 540, -*CameraY + 250, CameraX, CameraY, csdl_setup));
 					OnePressed = true;
 					break;
 				
 				case SDLK_3: 
 					Mix_PlayChannel(1, putSound, 0);
-					Mountains.push_back(new MountainPic(-*CameraX + 540, -*CameraY + 55, CameraX, CameraY, csdl_setup));
+					Mountains.push_back(new MountainPic(-*CameraX + 520, -*CameraY + 55, CameraX, CameraY, csdl_setup));
 					OnePressed = true;
 					break;
 				
@@ -241,6 +632,7 @@ void CMapGame::Update() {
 	}
 }
 
+	///================= CREATE LEVEL MODE ================///
 
 	if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN) {
 		if (!OnePressed && csdl_setup->GetMainEvent()->key.keysym.sym == SDLK_TAB) {
@@ -264,6 +656,8 @@ void CMapGame::Update() {
 			OnePressed = false;
 		}
 	}
+
+	///============== CREATE DELETE MODE ================///
 
 
 	if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN) {

@@ -24,6 +24,9 @@ public:
 	void DrawBackGround();
 	void DrawObject();
 	void Update();
+	void UpLoadStage();
+	void SaveStage();
+
 
 	enum ModeStage
 	{
@@ -51,6 +54,8 @@ private:
 	float* CameraX;
 	float* CameraY;
 
+	int x, y;
+
 	bool OnePressed;
 	bool SavedGame;
 	CSprite* grass;
@@ -66,10 +71,13 @@ private:
 
 	Mix_Chunk* putSound;
 	Mix_Chunk* soundSelect;
+	Mix_Chunk* soundSave;
 
 	SDL_Texture* levelCreateON;
 	SDL_Texture* levelCreateOFF;
+	SDL_Texture* Saved;
 	SDL_Rect levelRect;
+	SDL_Rect savedRect;
 
 	SDL_Texture* deleteCreateON;
 	SDL_Texture* deleteCreateOFF;

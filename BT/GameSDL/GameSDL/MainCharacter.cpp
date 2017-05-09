@@ -12,17 +12,21 @@ MainCharacter::MainCharacter(CSDL_Setup* passed_SDL_Setup, std::string FilePath,
 	MouseY = passed_MouseY;
 
 	character = new CSprite(csdl_setup->GetRenderer(), FilePath, 500, 300, 42, 42, CameraX, CameraY, CCollisionDetection(506, 306, 37, 42));
-
+	click = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/magicWand.png");
+	clickEffect = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/magic.png");
 	character->SetUpAnimation(3, 4);
 	timeCheck = SDL_GetTicks();
 	Follow = false;
 	distance = 0;
 	stopAnimation = false;
+	
 }
 
 MainCharacter::~MainCharacter()
 {
 	delete character;
+	SDL_DestroyTexture(click);
+	SDL_DestroyTexture(clickEffect);
 }
 
 float MainCharacter::GetDistance(int X1, int Y1, int X2, int Y2) {
@@ -37,6 +41,7 @@ void MainCharacter::Draw() {
 }
 
 void MainCharacter::UpdateAnimation() {
+
 	float angle = atan2(Follow_Point_Y - *CameraY, Follow_Point_X - *CameraX);
 	angle = angle *(180 / 3.14) + 180;
 	if (!stopAnimation) {
@@ -65,9 +70,25 @@ void MainCharacter::UpdateAnimation() {
 }
 
 void MainCharacter::UpdateControls() {
+	Follow_Point_X1 = *CameraX - *MouseX + 500;
+	Follow_Point_Y1 = *CameraY - *MouseY + 300;
+	clickRect.x = *CameraX - Follow_Point_X1 + 465;
+	clickRect.y = *CameraY - Follow_Point_Y1+ 265;
+	clickRect.w = 70;
+	clickRect.h = 70;
+	SDL_RenderCopy(csdl_setup->GetRenderer(), click, NULL, &clickRect);
 	if (csdl_setup->GetMainEvent()->type == SDL_MOUSEBUTTONDOWN || csdl_setup->GetMainEvent()->type == SDL_MOUSEMOTION) {
+		
 		if (csdl_setup->GetMainEvent()->button.button == SDL_BUTTON_LEFT)
 		{
+			Follow_Point_X1 = *CameraX - *MouseX + 500;
+			Follow_Point_Y1 = *CameraY - *MouseY + 300;
+			effectRect.x = *CameraX - Follow_Point_X1 + 455;
+			effectRect.y = *CameraY - Follow_Point_Y1 + 245;
+			effectRect.w = 100;
+			effectRect.h = 100;
+			SDL_RenderCopy(csdl_setup->GetRenderer(), clickEffect, NULL, &effectRect);
+			
 			Follow_Point_X = *CameraX - *MouseX + 500;
 			Follow_Point_Y = *CameraY - *MouseY + 300;
 			Follow = true;
@@ -249,7 +270,9 @@ void MainCharacter::UpdateControls() {
 	}
 }
 
+
 void MainCharacter::Update() {
+	
 	UpdateAnimation();
 	UpdateControls();
 }
