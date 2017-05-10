@@ -7,6 +7,7 @@ Mountain Position--
 Castle Position--
 --Castle Position
 Fountain Position--
+x: 1404	y: 1363
 --Fountain Position
 Soil Position--
 --Soil Position

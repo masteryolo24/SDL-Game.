@@ -26,6 +26,7 @@ private:
 		StatePlaying,
 		StateStory,
 		StateCharacter,
+		GameOver,
 		QuitGame
 	};
 
@@ -59,5 +60,7 @@ private:
 	SDL_Texture* selectCharacter_image = NULL;
 	SDL_Texture* controlingame_image = NULL;
 	SDL_Rect imageRect;
+
+	SDL_Texture* gameover = NULL;
 
 };

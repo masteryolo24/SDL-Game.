@@ -30,6 +30,7 @@ CMain::CMain(int passed_ScreenWidth, int passed_ScreenHeight)
 	story_image = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/story.jpg");
 	selectCharacter_image = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/selectCharacter.jpg");
 	controlingame_image = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/controlingame.jpg");
+	gameover = IMG_LoadTexture(csdl_setup->GetRenderer(), "image/dead.jpg");
 	imageRect.x =0;
 	imageRect.y =0;
 	imageRect.w = 1366;
@@ -56,6 +57,7 @@ CMain::~CMain(void)
 	SDL_DestroyTexture(control_imgae);
 	SDL_DestroyTexture(story_image);
 	SDL_DestroyTexture(selectCharacter_image);
+	SDL_DestroyTexture(gameover);
 
 }
 
@@ -70,6 +72,7 @@ void CMain::GameLoop(void) {
 		ForestStage->DrawObject();
 
 		ForestStage->Update();
+		character->DrawMouse();
 }
 
 void CMain::OnGame() {
@@ -145,24 +148,30 @@ void CMain::OnGame() {
 
 void CMain::OnRender() {
 	switch (gameState) {
+	case GameOver:
+		SDL_RenderCopy(csdl_setup->GetRenderer(), gameover, NULL, &imageRect);
+		if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN) {
+			if (csdl_setup->GetMainEvent()->key.keysym.sym == SDLK_y) {
+				gameState = StateMenu;
+			}
+			else if (csdl_setup->GetMainEvent()->key.keysym.sym == SDLK_n) {
+				gameState = QuitGame;
+			}
+		}
+		break;
 	case StateMenu:
-		SDL_RenderClear(csdl_setup->GetRenderer());
 		SDL_RenderCopy(csdl_setup->GetRenderer(), menu_image, NULL, &imageRect);
 		break;
 	case StateControl:
-		SDL_RenderClear(csdl_setup->GetRenderer());
 		SDL_RenderCopy(csdl_setup->GetRenderer(), control_imgae, NULL, &imageRect);
 		break;
 	case StateCredit:
-		SDL_RenderClear(csdl_setup->GetRenderer());
 		SDL_RenderCopy(csdl_setup->GetRenderer(), credit_image, NULL, &imageRect);
 		break;
 	case StateStory:
-		SDL_RenderClear(csdl_setup->GetRenderer());
 		SDL_RenderCopy(csdl_setup->GetRenderer(), story_image, NULL, &imageRect);
 		break;
 	case StateCharacter:
-		SDL_RenderClear(csdl_setup->GetRenderer());
 		SDL_RenderCopy(csdl_setup->GetRenderer(), selectCharacter_image, NULL, &imageRect);
 		switch (csdl_setup->GetMainEvent()->key.keysym.sym) {
 		case SDLK_1:
@@ -238,6 +247,11 @@ void CMain::OnRender() {
 			}
 		}
 		
+		if (character->gameOver == 1) {
+			gameState = GameOver;
+			Mix_HaltChannel(4);
+			
+		}
 		break;
 	}
 }

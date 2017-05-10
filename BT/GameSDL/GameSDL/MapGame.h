@@ -15,6 +15,8 @@
 #include "WheatPic.h"
 #include "TentPic.h"
 #include "FlagPic.h"
+#include "FirePic.h"
+#include "MagicBook.h"
 class CMapGame
 {
 public:
@@ -27,7 +29,6 @@ public:
 	void UpLoadStage();
 	void SaveStage();
 
-
 	enum ModeStage
 	{
 		GamePlay,
@@ -35,6 +36,8 @@ public:
 		Delete,
 		NonDelete
 	};
+
+	bool Magic;
 
 	std::vector <Tree*> GetTrees() { return moreTrees; }
 	std::vector <WaterPic*> GetWater() { return Waters; }
@@ -45,19 +48,27 @@ public:
 	std::vector <WheatPic*> GetWheat() { return Wheats; }
 	std::vector <TentPic*> GetTent() { return Tents; }
 	std::vector <FlagPic*> GetFlag() { return Flags; }
+	std::vector <FirePic*> GetFire() { return Fires; }
+	std::vector <MagicBook*> GetBook() { return Books; }
 
 private:
 	int Mode;
 	int ModeDelete;
 
 	CSDL_Setup* csdl_setup;
+
+
 	float* CameraX;
 	float* CameraY;
 
-	int x, y;
+	int FireX[100], FireY[100];
 
+	int BookX, BookY;
+
+	int x, y;
 	bool OnePressed;
 	bool SavedGame;
+	int FireCount;
 	CSprite* grass;
 	std::vector <Tree*> moreTrees;
 	std::vector <WaterPic*> Waters;
@@ -68,6 +79,8 @@ private:
 	std::vector <WheatPic*> Wheats;
 	std::vector <TentPic*> Tents;
 	std::vector <FlagPic*> Flags;
+	std::vector <FirePic*> Fires;
+	std::vector <MagicBook*> Books;
 
 	Mix_Chunk* putSound;
 	Mix_Chunk* soundSelect;

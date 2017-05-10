@@ -150,8 +150,10 @@
   <ItemGroup>
     <ClInclude Include="CastlePic.h" />
     <ClInclude Include="CollisionDetection.h" />
+    <ClInclude Include="FirePic.h" />
     <ClInclude Include="FlagPic.h" />
     <ClInclude Include="FountainPic.h" />
+    <ClInclude Include="MagicBook.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="MainCharacter.h" />
     <ClInclude Include="MapGame.h" />
@@ -168,9 +170,11 @@
   <ItemGroup>
     <ClCompile Include="CastlePic.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
+    <ClCompile Include="FirePic.cpp" />
     <ClCompile Include="FlagPic.cpp" />
     <ClCompile Include="FountainPic.cpp" />
     <ClCompile Include="GameSDL.cpp" />
+    <ClCompile Include="MagicBook.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainCharacter.cpp" />
     <ClCompile Include="MapGame.cpp" />

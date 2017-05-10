@@ -2,12 +2,12 @@
 
 CMapGame::CMapGame(int ScreenWidth, int ScreenHeight, float *passed_CameraX, float *passed_CameraY, CSDL_Setup* passed_csdl_setup)
 {
+	srand(time(NULL));
 	csdl_setup = passed_csdl_setup;
 	CameraX = passed_CameraX;
 	CameraY = passed_CameraY;
-	
-	grass = new CSprite(csdl_setup->GetRenderer(), "image/map/map.png", 0 , 0 , 4000, 3171, CameraX, CameraY, CCollisionDetection());
 
+	grass = new CSprite(csdl_setup->GetRenderer(), "image/map/map.png", 0, 0, 4000, 3171, CameraX, CameraY, CCollisionDetection());
 	Mode = Level;
 	ModeDelete = NonDelete;
 	UpLoadStage();
@@ -28,9 +28,17 @@ CMapGame::CMapGame(int ScreenWidth, int ScreenHeight, float *passed_CameraX, flo
 	putSound = Mix_LoadWAV("sound/putSound.wav");
 	soundSelect = Mix_LoadWAV("sound/clickSound.wav");
 	soundSave = Mix_LoadWAV("sound/savedGame.wav");
+	for (int i = 0; i < 40; i++) {
+		FireX[i] = rand() % 3700;
+		FireY[i] = rand() % 2500;
+		Fires.push_back(new FirePic(FireX[i], FireY[i], CameraX, CameraY, csdl_setup));
+	}
+	BookX = rand() % 100;
+	BookY = rand() % 100;
+	Books.push_back(new MagicBook(BookX, BookY, CameraX, CameraY, csdl_setup));
 }
 
-CMapGame::~CMapGame(void){
+CMapGame::~CMapGame(void) {
 
 	delete grass;
 	for (std::vector<Tree*>::iterator it = moreTrees.begin(); it != moreTrees.end(); ++it) {
@@ -76,6 +84,13 @@ CMapGame::~CMapGame(void){
 		delete (*it);
 	}
 
+	for (std::vector< FirePic*>::iterator it = Fires.begin(); it != Fires.end(); ++it) {
+		delete (*it);
+	}
+
+	for (std::vector<MagicBook*>::iterator it = Books.begin(); it != Books.end(); ++it) {
+		delete (*it);
+	}
 
 	Mix_FreeChunk(putSound);
 	Mix_FreeChunk(soundSave);
@@ -124,6 +139,13 @@ void CMapGame::DrawObject() {
 	}
 	for (std::vector<FlagPic*>::iterator it = Flags.begin(); it != Flags.end(); ++it) {
 		(*it)->DrawFlag();
+	}
+	for (std::vector <FirePic*>::iterator it = Fires.begin(); it != Fires.end(); ++it) {
+		(*it)->DrawFire();
+	}
+
+	for (std::vector <MagicBook*>::iterator it = Books.begin(); it != Books.end(); ++it) {
+		(*it)->DrawBook();
 	}
 
 	if (Mode == GamePlay && (ModeDelete == NonDelete || ModeDelete == Delete))
@@ -523,114 +545,117 @@ void CMapGame::Update() {
 		}
 	}
 
-	if (Mode == Level){
-		if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN) {
-			if (!OnePressed) {
+	if (Mode == Level) {
+		for (std::vector<WaterPic*>::iterator it = Waters.begin(); it != Waters.end(); ++it) {
+			(*it)->GetX();
+		}
+		if (Fires.size() == 0) {
+			if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN) {
+				if (!OnePressed) {
+					switch (csdl_setup->GetMainEvent()->key.keysym.sym) {
+					case SDLK_1:
+						Mix_PlayChannel(1, putSound, 0);
+						moreTrees.push_back(new Tree(-*CameraX + 480, -*CameraY + 170, CameraX, CameraY, csdl_setup));
+						OnePressed = true;
+						break;
+
+					case SDLK_2:
+						Mix_PlayChannel(1, putSound, 0);
+						Waters.push_back(new WaterPic(-*CameraX + 540, -*CameraY + 250, CameraX, CameraY, csdl_setup));
+						OnePressed = true;
+						break;
+
+					case SDLK_3:
+						Mix_PlayChannel(1, putSound, 0);
+						Mountains.push_back(new MountainPic(-*CameraX + 520, -*CameraY + 55, CameraX, CameraY, csdl_setup));
+						OnePressed = true;
+						break;
+
+					case SDLK_4:
+						Mix_PlayChannel(1, putSound, 0);
+						Castles.push_back(new CastlePic(-*CameraX + 540, -*CameraY + 120, CameraX, CameraY, csdl_setup));
+						OnePressed = true;
+						break;
+
+					case SDLK_5:
+						Mix_PlayChannel(1, putSound, 0);
+						Fountains.push_back(new FountainPic(-*CameraX + 540, -*CameraY + 230, CameraX, CameraY, csdl_setup));
+						OnePressed = true;
+						break;
+
+					case SDLK_6:
+						Mix_PlayChannel(1, putSound, 0);
+						Soils.push_back(new SoilPic(-*CameraX + 520, -*CameraY + 230, CameraX, CameraY, csdl_setup));
+						OnePressed = true;
+						break;
+
+					case SDLK_7:
+						Mix_PlayChannel(1, putSound, 0);
+						Wheats.push_back(new WheatPic(-*CameraX + 520, -*CameraY + 240, CameraX, CameraY, csdl_setup));
+						OnePressed = true;
+						break;
+
+					case SDLK_8:
+						Mix_PlayChannel(1, putSound, 0);
+						Tents.push_back(new TentPic(-*CameraX + 550, -*CameraY + 240, CameraX, CameraY, csdl_setup));
+						OnePressed = true;
+						break;
+					case SDLK_9:
+						Mix_PlayChannel(1, putSound, 0);
+						Flags.push_back(new FlagPic(-*CameraX + 520, -*CameraY + 240, CameraX, CameraY, csdl_setup));
+						OnePressed = true;
+						break;
+					}
+					Mix_Volume(1, 10);
+				}
+
+			}
+		}
+
+
+		if (csdl_setup->GetMainEvent()->type == SDL_KEYUP) {
+			if (OnePressed) {
 				switch (csdl_setup->GetMainEvent()->key.keysym.sym) {
-				case SDLK_1: 
-					Mix_PlayChannel(1, putSound, 0);
-					moreTrees.push_back(new Tree(-*CameraX + 480, -*CameraY + 170, CameraX, CameraY, csdl_setup));
-					OnePressed = true;
+				case SDLK_1:
+					OnePressed = false;
 					break;
-				
-				case SDLK_2: 
-					Mix_PlayChannel(1, putSound, 0);
-					Waters.push_back(new WaterPic(-*CameraX + 540, -*CameraY + 250, CameraX, CameraY, csdl_setup));
-					OnePressed = true;
+
+				case SDLK_2:
+					OnePressed = false;
 					break;
-				
-				case SDLK_3: 
-					Mix_PlayChannel(1, putSound, 0);
-					Mountains.push_back(new MountainPic(-*CameraX + 520, -*CameraY + 55, CameraX, CameraY, csdl_setup));
-					OnePressed = true;
+
+				case SDLK_3:
+					OnePressed = false;
 					break;
-				
-				case SDLK_4: 
-					Mix_PlayChannel(1, putSound, 0);
-					Castles.push_back(new CastlePic(-*CameraX + 540, -*CameraY + 120, CameraX, CameraY, csdl_setup));
-					OnePressed = true;
+
+				case SDLK_4:
+					OnePressed = false;
 					break;
-				
-				case SDLK_5: 
-					Mix_PlayChannel(1, putSound, 0);
-					Fountains.push_back(new FountainPic(-*CameraX + 540, -*CameraY + 230, CameraX, CameraY, csdl_setup));
-					OnePressed = true;
+
+				case SDLK_5:
+					OnePressed = false;
 					break;
 
 				case SDLK_6:
-					Mix_PlayChannel(1, putSound, 0);
-					Soils.push_back(new SoilPic(-*CameraX + 520, -*CameraY + 230, CameraX, CameraY, csdl_setup));
-					OnePressed = true;
+					OnePressed = false;
 					break;
 
 				case SDLK_7:
-					Mix_PlayChannel(1, putSound, 0);
-					Wheats.push_back(new WheatPic(-*CameraX + 520, -*CameraY + 240, CameraX, CameraY, csdl_setup));
-					OnePressed = true;
+					OnePressed = false;
 					break;
-					
+
 				case SDLK_8:
-					Mix_PlayChannel(1, putSound, 0);
-					Tents.push_back(new TentPic(-*CameraX + 550, -*CameraY + 240, CameraX, CameraY, csdl_setup));
-					OnePressed = true;
+					OnePressed = false;
 					break;
+
 				case SDLK_9:
-					Mix_PlayChannel(1, putSound, 0);
-					Flags.push_back(new FlagPic(-*CameraX + 520, -*CameraY + 240, CameraX, CameraY, csdl_setup));
-					OnePressed = true;
+					OnePressed = false;
 					break;
 				}
-				Mix_Volume(1, 10);
+
 			}
-
-		}
-
-
-
-
-	if (csdl_setup->GetMainEvent()->type == SDL_KEYUP) {
-		if (OnePressed) {
-			switch (csdl_setup->GetMainEvent()->key.keysym.sym) {
-			case SDLK_1: 
-				OnePressed = false;
-				break;
-			
-			case SDLK_2: 
-				OnePressed = false;
-				break;
-			
-			case SDLK_3: 
-				OnePressed = false;
-				break;
-			
-			case SDLK_4: 
-				OnePressed = false;
-				break;
-			
-			case SDLK_5: 
-				OnePressed = false;
-				break;
-
-			case SDLK_6:
-				OnePressed = false;
-				break;
-			
-			case SDLK_7:
-				OnePressed = false;
-				break;
-
-			case SDLK_8:
-				OnePressed = false;
-				break;
-
-			case SDLK_9:
-				OnePressed = false;
-				break;
-			}
-
 		}
 	}
-}
 
 	///================= CREATE LEVEL MODE ================///
 
@@ -684,133 +709,148 @@ void CMapGame::Update() {
 	}
 
 	///================DELETE MODE ON=============///
+	if (Magic == true) {
+		if (Books.size() > 0) {
+			delete Books[Books.size() - 1];
+			Books.pop_back();
+		}
+		if (ModeDelete == Delete) {
+			if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN) {
+				if (!OnePressed) {
+					switch (csdl_setup->GetMainEvent()->key.keysym.sym) {
 
-	if (ModeDelete == Delete) {
-		if (csdl_setup->GetMainEvent()->type == SDL_KEYDOWN) {
-			if (!OnePressed) {
-				switch (csdl_setup->GetMainEvent()->key.keysym.sym) {
+						///============== DELETE TREE ================///
 
-					///============== DELETE TREE ================///
+					case SDLK_1:
+						if (moreTrees.size() > 0) {
+							delete moreTrees[moreTrees.size() - 1];
+							moreTrees.pop_back();
+						}
+						break;
 
-				case SDLK_1:
-					if (moreTrees.size() > 0) {
-						delete moreTrees[moreTrees.size() - 1];
-						moreTrees.pop_back();
+
+						///================= DELETE WATER ================///
+
+					case SDLK_2:
+						if (Waters.size() > 0) {
+							delete Waters[Waters.size() - 1];
+							Waters.pop_back();
+						}
+						break;
+
+
+						///==============DELETE MOUNTAIN=============///
+
+					case SDLK_3:
+						if (Mountains.size() > 0) {
+							delete Mountains[Mountains.size() - 1];
+							Mountains.pop_back();
+						}
+						break;
+
+
+						///==============DELETE CASTLE=============///
+
+					case SDLK_4:
+						if (Castles.size() > 0) {
+							delete Castles[Castles.size() - 1];
+							Castles.pop_back();
+						}
+						break;
+
+
+						///===========DELETE FOUNTAIN===========///
+
+					case SDLK_5:
+						if (Fountains.size() > 0) {
+							delete Fountains[Fountains.size() - 1];
+							Fountains.pop_back();
+						}
+						break;
+
+						///============== DELETE SOIL ================///
+
+					case SDLK_6:
+						if (Soils.size() > 0) {
+							delete Soils[Soils.size() - 1];
+							Soils.pop_back();
+						}
+						break;
+						///=================
+					case SDLK_7:
+						if (Wheats.size() > 0) {
+							delete Wheats[Wheats.size() - 1];
+							Wheats.pop_back();
+						}
+						break;
+						///===========DELETE TENT============///
+					case SDLK_8:
+						if (Tents.size() > 0) {
+							delete Tents[Tents.size() - 1];
+							Tents.pop_back();
+						}
+						break;
+						///===========
+
+					case SDLK_9:
+						if (Flags.size() > 0) {
+							delete Flags[Flags.size() - 1];
+							Flags.pop_back();
+						}
+						break;
+
+					case SDLK_SPACE:
+						if (Fires.size() > 0) {
+							delete Fires[Fires.size() - 1];
+							Fires.pop_back();
+						}
+						break;
 					}
-					break;
-				
-
-				///================= DELETE WATER ================///
-
-				case SDLK_2:
-					if (Waters.size() > 0) {
-						delete Waters[Waters.size() - 1];
-						Waters.pop_back();
-					}
-					break;
-				
-
-				///==============DELETE MOUNTAIN=============///
-
-				case SDLK_3:
-					if (Mountains.size() > 0) {
-						delete Mountains[Mountains.size() - 1];
-						Mountains.pop_back();
-					}
-					break;
-				
-
-				///==============DELETE CASTLE=============///
-
-				case SDLK_4:
-					if (Castles.size() > 0) {
-						delete Castles[Castles.size() - 1];
-						Castles.pop_back();
-					}
-					break;
-				
-
-				///===========DELETE FOUNTAIN===========///
-
-				case SDLK_5:
-					if (Fountains.size() > 0) {
-						delete Fountains[Fountains.size() - 1];
-						Fountains.pop_back();
-					}
-					break;
-				
-					///============== DELETE SOIL ================///
-
-				case SDLK_6:
-					if (Soils.size() > 0) {
-						delete Soils[Soils.size() - 1];
-						Soils.pop_back();
-					}
-					break;
-					///=================
-				case SDLK_7:
-					if (Wheats.size() > 0) {
-						delete Wheats[Wheats.size() - 1];
-						Wheats.pop_back();
-					}
-					break;
-					///===========DELETE TENT============///
-				case SDLK_8:
-					if (Tents.size() > 0) {
-						delete Tents[Tents.size() - 1];
-						Tents.pop_back();
-					}
-					break;
-					///===========
-
-				case SDLK_9:
-					if (Flags.size() > 0) {
-						delete Flags[Flags.size() - 1];
-						Flags.pop_back();
-					}
-					break;
 				}
 			}
-		}
 
-		if (csdl_setup->GetMainEvent()->type == SDL_KEYUP) {
-			if (OnePressed) {
-				switch (csdl_setup->GetMainEvent()->key.keysym.sym) {
-				case SDLK_1:
-					OnePressed = false;
-					break;
+			if (csdl_setup->GetMainEvent()->type == SDL_KEYUP) {
+				if (OnePressed) {
+					switch (csdl_setup->GetMainEvent()->key.keysym.sym) {
+					case SDLK_1:
+						OnePressed = false;
+						break;
 
-				case SDLK_2:
-					OnePressed = false;
-					break;
+					case SDLK_2:
+						OnePressed = false;
+						break;
 
-				case SDLK_3:
-					OnePressed = false;
-					break;
+					case SDLK_3:
+						OnePressed = false;
+						break;
 
-				case SDLK_4:
-					OnePressed = false;
-					break;
+					case SDLK_4:
+						OnePressed = false;
+						break;
 
-				case SDLK_5:
-					OnePressed = false;
-					break;
+					case SDLK_5:
+						OnePressed = false;
+						break;
 
-				case SDLK_6:
-					OnePressed = false;
-					break;
+					case SDLK_6:
+						OnePressed = false;
+						break;
 
-				case SDLK_7:
-					OnePressed = false;
-					break;
-				case SDLK_8:
-					OnePressed = false;
-					break;
-				case SDLK_9:
-					OnePressed = false;
-					break;
+					case SDLK_7:
+						OnePressed = false;
+						break;
+					case SDLK_8:
+						OnePressed = false;
+						break;
+					case SDLK_9:
+						OnePressed = false;
+						break;
+					case SDLK_SPACE:
+						OnePressed = false;
+						break;
+					}
+
 				}
-
 			}
 		}
 	}

@@ -14,12 +14,13 @@ public:
 
 	void Update();
 	void Draw();
+	void DrawMouse();
+	int gameOver;
 private:
-	CMapGame* Enviroment;
+	CMapGame *Enviroment;
 
 	void UpdateAnimation();
 	void UpdateControls();
-	void UpdateControls_2();
 
 	float *CameraX;
 	float *CameraY;
@@ -42,10 +43,16 @@ private:
 	float distance;
 	bool stopAnimation;
 
+	bool Colliding;
+	bool Dead;
+
 	SDL_Texture* click;
 	SDL_Texture* clickEffect;
 	SDL_Rect clickRect;
 	SDL_Rect effectRect;
+
+	
+
 };
 
 

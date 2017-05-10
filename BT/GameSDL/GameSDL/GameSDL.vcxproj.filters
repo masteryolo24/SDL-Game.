@@ -72,6 +72,12 @@
     <ClInclude Include="FlagPic.h">
       <Filter>Header Files\ObjectH</Filter>
     </ClInclude>
+    <ClInclude Include="FirePic.h">
+      <Filter>Header Files\ObjectH</Filter>
+    </ClInclude>
+    <ClInclude Include="MagicBook.h">
+      <Filter>Header Files\ObjectH</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameSDL.cpp">
@@ -120,6 +126,12 @@
       <Filter>Source Files\Object</Filter>
     </ClCompile>
     <ClCompile Include="FlagPic.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="FirePic.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MagicBook.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
   </ItemGroup>
