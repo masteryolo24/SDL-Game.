@@ -33,8 +33,8 @@ CMapGame::CMapGame(int ScreenWidth, int ScreenHeight, float *passed_CameraX, flo
 		FireY[i] = rand() % 2500;
 		Fires.push_back(new FirePic(FireX[i], FireY[i], CameraX, CameraY, csdl_setup));
 	}
-	BookX = rand() % 100;
-	BookY = rand() % 100;
+	BookX = rand() % 3700;
+	BookY = rand() % 2500;
 	Books.push_back(new MagicBook(BookX, BookY, CameraX, CameraY, csdl_setup));
 }
 
