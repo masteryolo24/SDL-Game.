@@ -11,7 +11,7 @@ CSprite::CSprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int
 		std::cout << "Can not load " << FilePath.c_str() << std::endl;
 	}
 	CollisionImage = NULL;
-	CollisionImage = IMG_LoadTexture(renderer, "image/CollisionBox/box.png");
+	//CollisionImage = IMG_LoadTexture(renderer, "image/CollisionBox/box.png");
 
 	rect.x = x;
 	rect.y = y;
